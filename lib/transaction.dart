@@ -9,6 +9,8 @@ class TransactionPage extends StatefulWidget {
 
 class _TransactionPageState extends State<TransactionPage> {
   double _currentSliderValue = 0;
+  final snackBar = SnackBar(content: Text('Transaction initiated!'));
+  String txn = ' ';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +20,7 @@ class _TransactionPageState extends State<TransactionPage> {
           centerTitle: true,
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Card(
               elevation: 10,
@@ -64,7 +66,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(3.0),
                     child: TextField(
                       keyboardType: TextInputType.number,
                       decoration: new InputDecoration(
@@ -80,7 +82,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     ),
                   ),
                   Text(
-                          'Speed:',
+                          'Speed: ' + (_currentSliderValue.round() == 50? 'Medium': ((_currentSliderValue.round() == 0)?'Slow':'Fast')),
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             letterSpacing: -0.4,
@@ -94,7 +96,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     max: 100,
                     divisions: 2,
                     activeColor: Colors.black,
-                    label: _currentSliderValue.round() == 50? 'Medium': ((_currentSliderValue.round() == 0)?'Slow':'Fast'),
+                    // label: _currentSliderValue.round() == 50? 'Medium': ((_currentSliderValue.round() == 0)?'Slow':'Fast'),
                     onChanged: (double value) {
                       setState(() {
                         _currentSliderValue = value;
@@ -102,6 +104,12 @@ class _TransactionPageState extends State<TransactionPage> {
                     },
                   ),
                   GestureDetector(
+                    onTap:(){
+                      print("object");
+                      setState(() {
+                        txn = 'Transaction initiated!';
+                      });
+                    },
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: 16),
                       width: 100,
@@ -122,7 +130,15 @@ class _TransactionPageState extends State<TransactionPage> {
                         borderRadius: BorderRadius.all(Radius.circular(16)),
                       ),
                     ),
-                  )
+                  ),
+                  Text(
+                          txn,
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            letterSpacing: -0.4,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),)
                 ],
               ),
             )
